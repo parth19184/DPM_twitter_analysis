@@ -1,0 +1,2 @@
+access_token = "1452533975180738562-L1bhdhh9FmxWcKLJTBkiHW94OHPQdn"
+access_token_secret = "vqVCnQLI00yB0EfzmXp8UtSEOf8FHKx7S8Uz6T6lYAsX0"
