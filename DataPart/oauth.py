@@ -1,2 +1,4 @@
-access_token = "1452533975180738562-L1bhdhh9FmxWcKLJTBkiHW94OHPQdn"
-access_token_secret = "vqVCnQLI00yB0EfzmXp8UtSEOf8FHKx7S8Uz6T6lYAsX0"
+consumer_key = "UZsGlNd58jFSnkbzmiIj0asIH"
+consumer_key_secret = "cdv0HfYrqJ7517qXQnDy7y24oaHLbmZ2z2l2ZFECzS5EwylSEG"
+access_token = "1452533975180738562-iDShopCCVrvtIwlTgUzP94UHJIyjYV"
+access_token_secret = "N1807EGuy1F5bCMZEreYpQfsVdiEQ7ABjpQfvMxZNOxPq"
