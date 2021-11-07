@@ -43,3 +43,22 @@ test_list = get_keyword_tweets("infosys",15)
 #test_list[0]._json["text"]
 
 df = pd.DataFrame({"tweet": [tweet.text for tweet in test_list], "language":[tweet.lang for tweet in test_list],"likes": [tweet.favorite_count for tweet in test_list],"retweets": [tweet.retweet_count for tweet in test_list]})
+df = df[df.language == "en"]
+
+frames = []
+for i in range(10):
+    frames.append(get_keyword_tweets("infosys",100))
+
+frames2 =[]
+for test_l in frames:
+    df = pd.DataFrame({"tweet": [tweet.text for tweet in test_l], "language":[tweet.lang for tweet in test_l],"likes": [tweet.favorite_count for tweet in test_l],"retweets": [tweet.retweet_count for tweet in test_l]})
+    frames2.append(df)
+
+big_table = pd.concat(frames2)
+big_table['tweet'] = big_table['tweet'].apply(cleanText)
+big_table["Subjectivity"] = big_table["tweet"].apply(getSubjectivity)
+big_table["Polarity"] = big_table["tweet"].apply(getPolarity)
+
+big_table["Analysis"] = big_table["Polarity"].apply(getAnalysis)
+
+#big_table, "Analysis"
