@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <title>{{title | safe}}</title>
+    </head>
+
+    <!-- <body style="background-image: url('/static/images/BG0.jpg')"> -->
+    <body>
+        <!-- <div class="container">
+            <div class ="row">
+                <div class="col-12 col-sm-6">
+                    <img src="{{url_for('static', filename='/images/S1.jpg')}}", align="middle", height=255px; width="150px" />
+                </div>
+                <div class="col-12 col-sm-6">
+                    <img src="{{url_for('static', filename='/images/S1.jpg')}}", align="middle", height=255px; width="150px" />
+                </div>
+            </div>
+        </div> -->
+
+        <div class="container-fluid">
+            <div class=row>
+                <div class="col-12 col-sm-12" id="grad">
+                    <div >
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Made for Graphs. -->
+        <div class="container-fluid">
+
+            <div class="row-fluid">
+                <div class="pad"></div>
+            </div>
+
+            <div class="row" >
+            
+                <div class="col col-sm"> </div>
+                <div class="col-12 col-sm-5">
+                    
+                    <h1 style="text-align:center">HDFC(Info)</h1>
+                    <div id = "form-sidebar" style = "margin:auto;max-width: 500px;"> 
+                        <canvas id="lineChart" width="500" height="250"></canvas>
+                        <script>
+                            const data={
+                                    labels:{{ labels | safe }},
+                                    datasets: [
+                                    {
+                                            label: "Positive",
+                                            data: {{ PosPlot | safe }},
+                                            backgroundColor: "green",
+                                            borderColor: "rgb(75,192,192)",
+                                            // lineTension:0.1
+                                        },
+                                        {
+                                            label: "Neutral",
+                                            data: {{ NeuPlot | safe }},
+                                            backgroundColor: "gold",
+                                            borderColor: "rgb(75,192,192)",
+                                        },
+                                        {
+                                            label: "Negative",
+                                            data: {{ NegPlot | safe }},
+                                            backgroundColor: "red",
+                                            borderColor: "rgb(75,192,192)",
+                                        }
+                                    ]
+                                };
+                            
+                            const config = {
+                                type:"bar",
+                                data,
+                                options:{
+                                    parsing:{
+                                        xAxisKey:'nums',
+                                        yAxisKey:'prod.val'
+                                    },
+                                    responsive:true
+                                }
+                            };
+
+                            var ctx =document.getElementById("lineChart");
+                            var lineChart = new Chart(
+                                ctx,
+                                config
+                            );
+                            function clickHandler(click){
+                                const points = lineChart.getElementsAtEventForMode(click, 'nearest',
+                                    {intersect: true}, true)
+                                if(points.length){
+                                    const firstPoint = points[0];
+                                    //console.log(firstPoint)
+                                    const value = lineChart.data.datasets[firstPoint.datasetIndex].
+                                    data[firstPoint.index];
+                                    document.getElementById("feed").innerHTML=(value.prod.link);
+                                }
+                            }
+                            ctx.onclick = clickHandler;
+                        </script>
+                    </div>
+                </div>
+                <div class="col col-sm"></div>
+                <div class="col-12 col-sm-5">
+                    <h1 style="text-align: center;">Tata</h1>
+                    <div id = "form-sidebar" style = "margin:auto;max-width: 500px;">
+                        <canvas id="lineChart1" width="500" height="250"></canvas>
+                        <script>
+                            var ctx =document.getElementById("lineChart1").getContext("2d");
+                            var lineChart1 = new Chart(ctx,{
+                                type:"bar",
+                                data:{
+                                    labels:{{ labels1 | safe }},
+                                    datasets: [
+                                    {
+                                            label: "Positive",
+                                            data: {{ PosVal1 | safe }},
+                                            backgroundColor: "green",
+                                            borderColor: "rgb(75,192,192)",
+                                            // lineTension:0.1
+                                        },
+                                        {
+                                            label: "Neutral",
+                                            data: {{ NeuVal1 | safe }},
+                                            backgroundColor: "gold",
+                                            borderColor: "rgb(75,192,192)",
+                                        },
+                                        {
+                                            label: "Negative",
+                                            data: {{ NegVal1 | safe }},
+                                            backgroundColor: "red",
+                                            borderColor: "rgb(75,192,192)",
+                                        }
+                                    ]
+                                },
+                                options:{
+                                    responsive:true
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="col"> </div>
+            </div>
+            <div >
+                <p id="feed" style="border-radius: 2px;">hello</p>
+            </div>
+        </div>
+
+            <!-- Made for Search Box -->
+        <div class="col-sm-12">
+            <div class="boxContainer">
+                <table class ="elementsContatiner">
+                    <tr>
+                        <td>
+                        <!-- <input type="text" placeholder="Search" class="search"> -->
+                        </td>
+                        <form method = "post" action = "dropSel"> 
+                            <select id="DDst" name="DDst" class="formselect" aria-label="Default select example">
+                                <option value="not" selected>--Select--</option>
+                                {% for st in stock_symbols %}
+                                    <option value={{st}}>{{st}}</option>
+                               {% endfor %}
+                            </select>
+                            <input class="btn btn-primary" type="submit">
+                        </form>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Made for other trendy stocks-->
+        <div class="container">
+            <div class="pad">
+                <div class="row center-block">
+                    <div class="col-12 col-sm-4">
+                        <div class="empty" style="text-align: center;">
+                            <div class="linksPad">
+                                <a href="{{ url_for('details', st_name='1') }}">3M India</a>
+                            </div>
+                            <img src="{{url_for('static', filename='/images/questionMark.jpg')}}" width="150" height="250" class="img-responsive center-block d-block mx-auto" >
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <div class="empty" style="text-align: center;">
+                            <div class="linksPad">
+                                <a href="{{ url_for('details', st_name='2') }}">HDFC</a>
+                            </div>
+                            <img src="{{url_for('static', filename='/images/questionMark.jpg')}}" width="150" height="250" class="img-responsive center-block d-block mx-auto" >
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <div class="empty" style="text-align: center;">
+                            <div class="linksPad">
+                                <a href="{{ url_for('Bosch') }}">Bosch</a>
+                            </div>
+                            <img src="{{url_for('static', filename='/images/questionMark.jpg')}}" width="150" height="250" class="img-responsive center-block d-block mx-auto" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.0.min.js"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.0.min.js"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.0.min.js"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.0.min.js"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.0.min.js"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+            crossorigin="anonymous"></script>
+        <script src="bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
