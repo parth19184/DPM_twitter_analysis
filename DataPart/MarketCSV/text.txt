@@ -1,0 +1,2 @@
+only using https://www1.nseindia.com/products/content/equities/equities/eq_security.htm to get 15 day data, small relations to the 
+sentiment data will be seen and correction model will be presented.
